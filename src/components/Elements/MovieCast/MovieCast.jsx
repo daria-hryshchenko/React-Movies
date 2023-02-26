@@ -3,6 +3,14 @@ import { nanoid } from 'nanoid';
 import { useParams } from 'react-router';
 import { requestCastById } from 'api/api';
 import Loader from 'components/Elements/Loader/Loader';
+import {
+  CastSection,
+  CastList,
+  CastItem,
+  CastName,
+  CastCharacter,
+  NoCastMessage,
+} from './MovieCast.styled';
 
 export default function MovieCast() {
   const [movieCast, setMovieCast] = useState([]);
@@ -22,12 +30,12 @@ export default function MovieCast() {
   }, [movieId]);
 
   return (
-    <div>
+    <CastSection>
       {movieCast.length > 0 ? (
         movieCast.map(({ character, profile_path, name, index }) => {
           return (
-            <ul key={nanoid()}>
-              <li>
+            <CastList key={nanoid()}>
+              <CastItem>
                 {profile_path !== null ? (
                   <img
                     src={`https://image.tmdb.org/t/p/w200${profile_path}`}
@@ -40,18 +48,20 @@ export default function MovieCast() {
                     width="200"
                   />
                 )}
-              </li>
-              <li>{name}</li>
-              <li>Character: {character}</li>
-            </ul>
+                <CastName>{name}</CastName>
+                <CastCharacter>Character: {character}</CastCharacter>
+              </CastItem>
+            </CastList>
           );
         })
       ) : (
-        <div>We have no information about cast in this movie</div>
+        <NoCastMessage>
+          We have no information about cast in this movie
+        </NoCastMessage>
       )}
 
       {loading && <Loader />}
       {error && <div>Oops, some error occured... Message:{error}</div>}
-    </div>
+    </CastSection>
   );
 }

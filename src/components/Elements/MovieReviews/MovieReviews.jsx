@@ -3,6 +3,14 @@ import { useParams } from 'react-router';
 import { nanoid } from 'nanoid';
 import { requestReviewsById } from 'api/api';
 import Loader from 'components/Elements/Loader/Loader';
+import {
+  NoFilmMessage,
+  ReviewSection,
+  ReviewList,
+  ReviewItem,
+  ReviewTitle,
+  ReviewContent,
+} from './MovieReview.styled';
 
 export default function MovieReviews() {
   const [reviews, setReviews] = useState([]);
@@ -22,23 +30,23 @@ export default function MovieReviews() {
   }, [movieId]);
 
   return (
-    <div>
+    <ReviewSection>
       {reviews.length > 0 ? (
         reviews.map(({ author, content, index }) => {
           return (
-            <ul key={nanoid()}>
-              <li>
-                <h3>Author: {author}</h3>
-                <p>{content}</p>
-              </li>
-            </ul>
+            <ReviewList key={nanoid()}>
+              <ReviewItem>
+                <ReviewTitle>Author: {author}</ReviewTitle>
+                <ReviewContent>{content}</ReviewContent>
+              </ReviewItem>
+            </ReviewList>
           );
         })
       ) : (
-        <div>There is no reviews on this film</div>
+        <NoFilmMessage>There is no reviews on this film</NoFilmMessage>
       )}
       {loading && <Loader />}
       {error && <div>Oops, some error occured... Message:{error}</div>}
-    </div>
+    </ReviewSection>
   );
 }

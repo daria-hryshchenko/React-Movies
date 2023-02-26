@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { requestMovies } from 'api/api';
 import Loader from 'components/Elements/Loader/Loader';
@@ -9,6 +8,7 @@ import {
   TrendItem,
   TrendTitle,
   ErrorMessage,
+  NavLinkPage,
 } from './HomePage.Styled';
 
 export default function HomePage() {
@@ -44,9 +44,9 @@ export default function HomePage() {
           movies.map(({ title, id }) => {
             return (
               <TrendItem key={id}>
-                <NavLink to={`/movies/${id}`} state={{ from: location }}>
+                <NavLinkPage to={`/movies/${id}`} state={{ from: location }}>
                   {title}
-                </NavLink>
+                </NavLinkPage>
               </TrendItem>
             );
           })}

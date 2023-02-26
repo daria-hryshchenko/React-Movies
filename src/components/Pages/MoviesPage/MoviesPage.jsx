@@ -1,6 +1,15 @@
 import { useState, useEffect } from 'react';
 import { requestSeachById } from 'api/api';
-import { useSearchParams, NavLink, useLocation } from 'react-router-dom';
+import { useSearchParams, useLocation } from 'react-router-dom';
+import {
+  Container,
+  FormSeach,
+  Input,
+  ButtonSeach,
+  MovieList,
+  LinkToMovie,
+  NavLinkMovie,
+} from './MoviesPage.styled';
 import Loader from 'components/Elements/Loader/Loader';
 
 export default function MoviesPage() {
@@ -35,24 +44,24 @@ export default function MoviesPage() {
   };
 
   return (
-    <div>
-      <form onSubmit={onHandleSubmit}>
-        <input type="text" placeholder="input movie name" name="movie" />
-        <button type="submit">Search</button>
-      </form>
+    <Container>
+      <FormSeach onSubmit={onHandleSubmit}>
+        <Input type="text" placeholder="input movie name" name="movie" />
+        <ButtonSeach type="submit">Search</ButtonSeach>
+      </FormSeach>
       {moviesList !== null && (
-        <ul>
+        <MovieList>
           {moviesList.map(({ id, original_title }) => (
-            <li key={id}>
-              <NavLink to={`/movies/${id}`} state={location}>
+            <LinkToMovie key={id}>
+              <NavLinkMovie to={`/movies/${id}`} state={location}>
                 {original_title}{' '}
-              </NavLink>
-            </li>
+              </NavLinkMovie>
+            </LinkToMovie>
           ))}
-        </ul>
+        </MovieList>
       )}
       {loading && <Loader />}
       {error && <div>Oops, some error occured... Message:{error}</div>}
-    </div>
+    </Container>
   );
 }

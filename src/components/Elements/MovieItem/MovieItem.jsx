@@ -1,9 +1,20 @@
 import { useEffect, useState, Suspense } from 'react';
 import { useParams } from 'react-router';
 import { requestMoviesById } from 'api/api';
-import { NavLink, Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 
-import { MovieCardSection, MovieCard, ErrorMessage } from './MovieItem.Styled';
+import {
+  MovieCardSection,
+  MovieCard,
+  ErrorMessage,
+  NavLinkCard,
+  MovieList,
+  AdditionList,
+  AdditionItem,
+  AdditionTitle,
+  MoviesItem,
+  MovieTitle,
+} from './MovieItem.Styled';
 import Loader from 'components/Elements/Loader/Loader';
 
 export default function MovieItem() {
@@ -44,38 +55,38 @@ export default function MovieItem() {
 
   return (
     <MovieCardSection>
-      <NavLink to={location.state ?? '/'}>🡐 Go back</NavLink>
+      <NavLinkCard to={location.state ?? '/'}>🡐 Go back</NavLinkCard>
       {loading && <Loader />}
       {movie !== null && (
         <MovieCard movie={movie}>
-          <ul>
-            <li>
+          <MovieList>
+            <MoviesItem>
               <img
                 src={`${BASE_IMG_URL}${movie.poster_path}`}
                 alt={movie.title}
               />
-            </li>
-            <li>
-              <h1>
+            </MoviesItem>
+            <MoviesItem>
+              <MovieTitle>
                 {movie.title}({movie.release_date.slice(0, 4)})
-              </h1>
+              </MovieTitle>
               <p>User csore: {Math.round(Number(movie.vote_average) * 10)}%</p>
               <h2>Owerview</h2>
               <p>{movie.overview}</p>
               <h2>Genres</h2>
               <p>{genres}</p>
-            </li>
-          </ul>
+            </MoviesItem>
+          </MovieList>
           <hr />
-          <h2>Addition information</h2>
-          <ul>
-            <li>
-              <NavLink to="cast">Cast</NavLink>
-            </li>
-            <li>
-              <NavLink to="reviews">Reviews</NavLink>
-            </li>
-          </ul>
+          <AdditionTitle>Addition information</AdditionTitle>
+          <AdditionList>
+            <AdditionItem>
+              <NavLinkCard to="cast">Cast</NavLinkCard>
+            </AdditionItem>
+            <AdditionItem>
+              <NavLinkCard to="reviews">Reviews</NavLinkCard>
+            </AdditionItem>
+          </AdditionList>
         </MovieCard>
       )}
       <Suspense fallback={<div>Loading...</div>}>
