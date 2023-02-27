@@ -14,7 +14,7 @@ import {
   AdditionTitle,
   MoviesItem,
   MovieTitle,
-} from './MovieItem.Styled';
+} from './MovieInfo.Styled';
 import Loader from 'components/Elements/Loader/Loader';
 
 export default function MovieItem() {
@@ -61,10 +61,18 @@ export default function MovieItem() {
         <MovieCard movie={movie}>
           <MovieList>
             <MoviesItem>
-              <img
-                src={`${BASE_IMG_URL}${movie.poster_path}`}
-                alt={movie.title}
-              />
+              {movie.poster_path !== null ? (
+                <img
+                  src={`${BASE_IMG_URL}${movie.poster_path}`}
+                  alt={movie.title}
+                />
+              ) : (
+                <img
+                  src="https://www.prokerala.com/movies/assets/img/no-poster-available.jpg"
+                  alt="no img"
+                  width="300"
+                />
+              )}
             </MoviesItem>
             <MoviesItem>
               <MovieTitle>

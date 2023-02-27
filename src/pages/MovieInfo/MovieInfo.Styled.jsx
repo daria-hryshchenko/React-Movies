@@ -9,6 +9,7 @@ export const MovieCardSection = styled.section`
 export const BackButton = styled.button`
   border: none;
   background: transparent;
+  padding: 20px;
 `;
 
 export const MovieCard = styled.div``;
